@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    
     public Transform targetObject;         // 检测的对象
     public float detectionRange = 5f;      // 触发QTE的范围
     public GameObject qteUI;               // QTE的UI界面
@@ -16,11 +17,15 @@ public class Player : MonoBehaviour
     private bool isQTEActive = false;
     public float pointerSpeed = 0.5f;      // 指针移动速度
     public bool increasePointer = true;    // 指针增减状态
+    public GameObject heartPrefab;       // 预制心形
+    public Sprite heartFull;             // 满血心
+    public Sprite heartEmpty;            // 空血心
+    public Transform heartContainer;     // 心形父对象
+    private Image[] hearts;
 
 
 
-
-    public int maxHealth = 100;
+    public int maxHealth = 5;
     
     public int currentHealth ;
 
@@ -42,9 +47,18 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
-        
+        hearts = new Image[maxHealth];
 
-        
+        // 创建心形UI
+        for (int i = 0; i < maxHealth; i++)
+        {
+            GameObject heart = Instantiate(heartPrefab, heartContainer);
+            Image heartImage = heart.GetComponent<Image>();
+            heartImage.sprite = heartFull;
+            hearts[i] = heartImage;
+        }
+
+
         if (healthBar != null)
         {
             healthBar.maxValue = maxHealth;
@@ -88,7 +102,7 @@ public class Player : MonoBehaviour
         {
             if (npc.isGood)
             {
-                IncreaseHealth(10);
+               Heal(1);
 
             }
             else
@@ -167,7 +181,7 @@ public class Player : MonoBehaviour
                 Player playerHealth = GetComponent<Player>();
                 if (playerHealth != null)
                 {
-                    playerHealth.TakeDamage(10);
+                    playerHealth.TakeDamage(1);
                 }
                 EndQTE();
             }
@@ -189,19 +203,33 @@ public class Player : MonoBehaviour
     }
 
 
+    public void UpdateHearts()
+    {
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if (i < currentHealth)
+                hearts[i].sprite = heartFull;
+            else
+                hearts[i].sprite = heartEmpty;
+        }
+    }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        if (currentHealth < 0) currentHealth = 0;
+        UpdateHearts();
     }
 
-    
-    public void IncreaseHealth(int amount)
+    // 回复血量方法
+    public void Heal(int amount)
     {
         currentHealth += amount;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        UpdateHearts();
     }
 
-    
+
     void Die()
     {
         Debug.Log(gameObject.name + " 死亡");
