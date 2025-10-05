@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    bool canMove = true;
     
     public Transform targetObject;         // ���Ķ���
     public float detectionRange = 5f;      // ����QTE�ķ�Χ
@@ -44,6 +45,8 @@ public class Player : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (!canMove) return;   
+        
         // ����Ŀ���ٶ�
         float targetSpeed = moveInput * moveSpeed;
 
@@ -64,6 +67,12 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        if (isQTEActive == true)
+        {
+            HandleQTEInput();
+        }
+        if (!canMove) return;   
+        
         float distance = Vector3.Distance(transform.position, targetObject.position);
 
         float moveX = Input.GetAxis("Horizontal"); 
@@ -90,10 +99,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (isQTEActive == true)
-        {
-            HandleQTEInput();
-        }
+        
     }
 
     void StartQTE()
@@ -101,6 +107,7 @@ public class Player : MonoBehaviour
         isQTEActive = true;
         qteUI.SetActive(true);
         pointerImage.fillAmount = 0f;
+        canMove = false;
     }
 
     void HandleQTEInput()
@@ -132,12 +139,14 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            canMove = true;
             if (IsCorrectSegment(pointerImage.fillAmount))
             {
                 // �ɹ��߼�
                 Debug.Log("QTE Success!");
                 //Destroy(targetObject.gameObject); // �������
                 EndQTE();
+                
             }
             else
             {
