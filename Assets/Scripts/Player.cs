@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI; 
 
 
@@ -17,8 +18,8 @@ public class Player : MonoBehaviour
     private bool isQTEActive = false;
     public float pointerSpeed = 0.5f;      // ָ���ƶ��ٶ�
     public bool increasePointer = true;    // ָ������״̬
-    
-    
+    public GameObject deathPanel;
+
 
     [HideInInspector]
     public PlayerHealth playerHealth;
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
     {
         playerHealth = GetComponent<PlayerHealth>();
         rb = GetComponent<Rigidbody2D>();
+        deathPanel.SetActive(false);
     }
     void FixedUpdate()
     {
@@ -172,6 +174,10 @@ public class Player : MonoBehaviour
         playerHealth.currentHealth -= damage;
         if (playerHealth.currentHealth < 0) playerHealth.currentHealth = 0;
         playerHealth.UpdateHearts();
+        if (playerHealth.currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     // �ظ�Ѫ������
@@ -183,12 +189,7 @@ public class Player : MonoBehaviour
     }
 
 
-    void Die()
-    {
-        Debug.Log(gameObject.name + " ����");
-        
-        Destroy(gameObject);
-    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -211,5 +212,21 @@ public class Player : MonoBehaviour
             //print(npc.name);
         }
     }
+    void Die()
+    {
+        playerHealth.currentHealth = 0;
+
+        // 显示死亡界面
+        deathPanel.SetActive(true);
+        // 可选择禁用玩家控制脚本
+        GetComponent<Player>().enabled = false;
+    }
+    public void RestartGame()
+    {
+        // 重新加载当前场景
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
+
 }
 
