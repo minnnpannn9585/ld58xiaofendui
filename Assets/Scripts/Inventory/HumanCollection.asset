@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 960f823278f0c4d1eb34c3ff74b84216, type: 3}
+  m_Name: HumanCollection
+  m_EditorClassIdentifier: 
+  humans:
+  - {fileID: 11400000, guid: 603c74d59dc834d6e9b3b80be81d8fae, type: 2}
+  - {fileID: 11400000, guid: aa431e2ba274642ba83afc0a21672fe0, type: 2}
+  - {fileID: 11400000, guid: cc79de2670cff497880665681cc1f574, type: 2}
+  - {fileID: 11400000, guid: 3cbe4f36eef244ff6abdf83a577b5451, type: 2}
+  - {fileID: 11400000, guid: 4b8af70152ab04999b2b4e8684b6fbf9, type: 2}
+  - {fileID: 11400000, guid: 41f9c8461617f477c977d168593964c3, type: 2}
+  - {fileID: 11400000, guid: 0ac3da5a0a92c4482af28750a8abfa87, type: 2}
+  - {fileID: 11400000, guid: 135fc5b036ff94772aa61b46cd601d12, type: 2}
