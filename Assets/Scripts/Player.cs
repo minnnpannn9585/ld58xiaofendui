@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public float minX = -5f;
+    public float maxX = 5f;
+    public float minY = 0f;
+    public float maxY = 5f;
     bool canMove = true;
 
     float distance = 0;
@@ -71,6 +75,12 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        Vector3 pos = transform.position;
+
+        // 限制物体在指定范围内
+        pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        transform.position = pos;
         if (isQTEActive == true)
         {
             HandleQTEInput();
