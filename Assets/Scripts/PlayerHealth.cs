@@ -16,6 +16,7 @@ public class PlayerHealth : MonoBehaviour
     //public Slider healthBar;
     public GameObject heartPrefab;
     
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -40,4 +41,5 @@ public class PlayerHealth : MonoBehaviour
                 hearts[i].sprite = heartEmpty;
         }
     }
+   
 }
