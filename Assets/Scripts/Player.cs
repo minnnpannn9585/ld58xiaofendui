@@ -9,8 +9,11 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     bool canMove = true;
-    
-    public Transform targetObject;         // ���Ķ���
+
+    float distance = 0;
+
+
+    Transform targetObject;         // ���Ķ���
     public float detectionRange = 5f;      // ����QTE�ķ�Χ
     public GameObject qteUI;               // QTE��UI����
     public Image pointerImage;             // QTEָ��
@@ -74,7 +77,8 @@ public class Player : MonoBehaviour
         }
         if (!canMove) return;   
         
-        float distance = Vector3.Distance(transform.position, targetObject.position);
+        if(targetObject != null) 
+            distance = Vector3.Distance(transform.position, targetObject.position);
 
         float moveX = Input.GetAxis("Horizontal"); 
         float moveY = Input.GetAxis("Vertical");   
@@ -98,6 +102,8 @@ public class Player : MonoBehaviour
                     StartQTE();
                 }
             }
+            
+
         }
 
         
@@ -105,6 +111,7 @@ public class Player : MonoBehaviour
 
     void StartQTE()
     {
+        print(1111);
         isQTEActive = true;
         qteUI.SetActive(true);
         pointerImage.fillAmount = 0f;
@@ -207,6 +214,7 @@ public class Player : MonoBehaviour
         {
             inRange = true;
             npc = collision.GetComponent<NPCController>();
+            targetObject = collision.transform;
             print(npc.name);
             print(npc.isGood);
         }
@@ -216,9 +224,9 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag("NPC"))
         {
+            targetObject = null;
             inRange = false;
             npc = null;
-             
             //print(npc.name);
         }
     }
