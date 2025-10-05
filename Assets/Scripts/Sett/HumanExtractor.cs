@@ -11,7 +11,7 @@ public class HumanExtractor : MonoBehaviour
     public void UpdateImageWithId(int id)
     {
         //GetComponent<Image>().sprite = image;
-        Debug.Log("Modifying id");
+        //Debug.Log("Modifying id");
         humanText.text = id.ToString();
     }
     // Start is called before the first frame update
