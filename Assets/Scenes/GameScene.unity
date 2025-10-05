@@ -4151,6 +4151,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 782571022092241298, guid: 3de14b302f9c07943a162cdec42ece1c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 840102528130302145, guid: 3de14b302f9c07943a162cdec42ece1c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030061882821863736, guid: 3de14b302f9c07943a162cdec42ece1c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1383399555270257897, guid: 3de14b302f9c07943a162cdec42ece1c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
@@ -4240,6 +4252,10 @@ PrefabInstance:
       value: CollectionCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 6091759504460216447, guid: 3de14b302f9c07943a162cdec42ece1c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337399374435615941, guid: 3de14b302f9c07943a162cdec42ece1c, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -4372,6 +4388,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1907753491}
     - target: {fileID: 8470570972859478126, guid: 3de14b302f9c07943a162cdec42ece1c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658483447647191039, guid: 3de14b302f9c07943a162cdec42ece1c, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
