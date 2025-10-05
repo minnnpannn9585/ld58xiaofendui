@@ -41,7 +41,8 @@ public class Player : MonoBehaviour
     {
         playerHealth = GetComponent<PlayerHealth>();
         rb = GetComponent<Rigidbody2D>();
-        deathPanel.SetActive(false);
+        if (deathPanel!=null)
+            deathPanel.SetActive(false);
     }
     void FixedUpdate()
     {
