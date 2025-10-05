@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 224001642}
   - component: {fileID: 224001641}
   - component: {fileID: 224001640}
+  - component: {fileID: 224001645}
   - component: {fileID: 224001643}
   - component: {fileID: 224001644}
   m_Layer: 0
@@ -275,6 +276,24 @@ MonoBehaviour:
   target: {fileID: 1020155271}
   offset: {x: 0, y: 0, z: -10}
   smoothSpeed: 0.125
+--- !u!114 &224001645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224001639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56fd53c57ea52043a44f4cf52a46731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSource: {fileID: 0}
+  soundSource: {fileID: 0}
+  musicClips: []
+  soundClips: []
+  musicVolume: 1
+  soundVolume: 1
 --- !u!1 &289016682
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +481,8 @@ MonoBehaviour:
   qteUI: {fileID: 1152151080}
   pointerImage: {fileID: 289016684}
   targetSegment: {fileID: 734740856}
+  pointerSpeed: 0.5
+  increasePointer: 1
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 0}
