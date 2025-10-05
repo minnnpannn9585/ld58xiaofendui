@@ -4,34 +4,34 @@ using UnityEngine;
 
 public class MapToggle : MonoBehaviour
 {
-    // µØÍ¼ UI Panel
+    // ï¿½ï¿½Í¼ UI Panel
     public GameObject mapPanel;
 
-    // Íæ¼Ò¶ÔÏó
+    // ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½
     public Transform player;
 
-    // µØÍ¼ÉÏ±íÊ¾Íæ¼ÒµÄÎ»ÖÃµÄÍ¼±ê
+    // ï¿½ï¿½Í¼ï¿½Ï±ï¿½Ê¾ï¿½ï¿½Òµï¿½Î»ï¿½Ãµï¿½Í¼ï¿½ï¿½
     public RectTransform playerIcon;
 
-    // µØÍ¼´óÐ¡ÓëÊµ¼Ê³¡¾°µÄ±ÈÀý
-    public Vector2 mapSize = new Vector2(200, 200); // µØÍ¼ UI µÄ¿í¸ß
-    public Vector2 worldSize = new Vector2(50, 50);  // ³¡¾°Êµ¼Ê´óÐ¡
+    // ï¿½ï¿½Í¼ï¿½ï¿½Ð¡ï¿½ï¿½Êµï¿½Ê³ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
+    public Vector2 mapSize = new Vector2(200, 200); // ï¿½ï¿½Í¼ UI ï¿½Ä¿ï¿½ï¿½
+    public Vector2 worldSize = new Vector2(50, 50);  // ï¿½ï¿½ï¿½ï¿½Êµï¿½Ê´ï¿½Ð¡
 
     void Start()
     {
-        // ³õÊ¼»¯Ê±Òþ²ØµØÍ¼
+        // ï¿½ï¿½Ê¼ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Øµï¿½Í¼
         mapPanel.SetActive(false);
     }
 
     void Update()
     {
-        // °´ M ¼üÇÐ»»µØÍ¼ÏÔÊ¾
+        // ï¿½ï¿½ M ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Ê¾
         if (Input.GetKeyDown(KeyCode.M))
         {
             mapPanel.SetActive(!mapPanel.activeSelf);
         }
 
-        // Èç¹ûµØÍ¼ÏÔÊ¾£¬Ôò¸üÐÂÍæ¼ÒÍ¼±êÎ»ÖÃ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Î»ï¿½ï¿½
         if (mapPanel.activeSelf)
         {
             UpdatePlayerIconPosition();
@@ -40,16 +40,14 @@ public class MapToggle : MonoBehaviour
 
     void UpdatePlayerIconPosition()
     {
-        // ½«Íæ¼ÒÊÀ½ç×ø±êÓ³Éäµ½µØÍ¼×ø±ê
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½äµ½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½
         Vector2 mapPos = new Vector2(
             (player.position.x / worldSize.x) * mapSize.x,
             (player.position.y / worldSize.y) * mapSize.y
         );
 
-        // µ÷ÕûÎªµØÍ¼ÖÐÐÄÎªÔ­µã
+        // ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ÎªÔ­ï¿½ï¿½
         mapPos -= mapSize / 2;
-
-        // ¸üÐÂÍæ¼ÒÍ¼±êÎ»ÖÃ
         playerIcon.anchoredPosition = mapPos;
     }
 }

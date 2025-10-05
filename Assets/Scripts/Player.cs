@@ -87,7 +87,16 @@ public class Player : MonoBehaviour
             if (npc.isGood)
             {
                Heal(1);
-               BookManager.instance.TurnObjectOn(npc.humanIndex);
+               if (npc.isRight)
+               {
+                   npc.isRightFinishTime++;
+                   if(npc.isRightFinishTime == 2)
+                       BookManager.instance.TurnObjectOn(npc.humanIndex);
+               }
+               else
+               {
+                   BookManager.instance.TurnObjectOn(npc.humanIndex);
+               }
             }
             else
             {

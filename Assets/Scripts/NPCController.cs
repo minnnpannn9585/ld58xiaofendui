@@ -10,6 +10,7 @@ public class NPCController : MonoBehaviour
     public bool isGood;
     public int humanIndex;
     public bool isRight;
+    public int isRightFinishTime;
     public float toggleInterval = 10f;
     
     [Header("qte")]
@@ -76,7 +77,17 @@ public class NPCController : MonoBehaviour
             player.canMove = true;
             if (IsCorrectSegment(pointerImage.fillAmount))
             {
-                BookManager.instance.TurnObjectOn(humanIndex);
+                if (isRight)
+                {
+                    isRightFinishTime++;
+                    if(isRightFinishTime == 2)
+                        BookManager.instance.TurnObjectOn(humanIndex);
+                }
+                else
+                {
+                    BookManager.instance.TurnObjectOn(humanIndex);
+                }
+
                 Debug.Log("QTE Success!");
                 EndQTE();
             }
