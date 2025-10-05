@@ -4,10 +4,21 @@ using UnityEngine;
 
 public class ButtonFunctions : MonoBehaviour
 {
+    public Animator collectionAnimator;
 
     public void ChangeScene(string sceneName)
     {
         GameManager.ChangeScene(sceneName);
+    }
+
+    public void OpenCollection()
+    {
+        collectionAnimator.SetTrigger("SetOn");
+    }
+
+    public void CloseCollection()
+    {
+        collectionAnimator.SetTrigger("SetOff");
     }
     // Start is called before the first frame update
     void Start()
