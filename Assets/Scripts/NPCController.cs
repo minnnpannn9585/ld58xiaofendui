@@ -1,37 +1,113 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPCController : MonoBehaviour
 {
+    public Player player;
     public bool isGood;
-
+    public int humanIndex;
     public bool isRight;
-
-    // 定义切换间隔时间，单位为秒
     public float toggleInterval = 10f;
+    
+    [Header("qte")]
+    public GameObject qteUI;               // QTE锟斤拷UI
+    public Image pointerImage;             // QTE指
+    public Image targetSegment;
+
+    [HideInInspector]
+    public bool isQTEActive = false;
+    public float pointerSpeed = 0.5f;
+    public bool increasePointer = true;
 
     void Start()
     {
+        player = FindObjectOfType<Player>();
         if(isRight)
-        // 启动协程，每隔指定时间切换isGood状态
             StartCoroutine(ToggleIsGoodCoroutine());
     }
 
-    // 协程方法，每 toggleInterval 秒切换一次isGood
+    private void Update()
+    {
+        if (isQTEActive == true)
+        {
+            HandleQTEInput();
+        }
+    }
+    
+    public void StartQTE()
+    {
+        //print(1111);
+        isQTEActive = true;
+        qteUI.SetActive(true);
+        pointerImage.fillAmount = 0f;
+        player.canMove = false;
+    }
+    
+    void HandleQTEInput()
+    {
+        if (increasePointer)
+        {
+            pointerImage.fillAmount += pointerSpeed * Time.deltaTime;
+            if (pointerImage.fillAmount >= 1f)
+            {
+                pointerImage.fillAmount = 1f;
+                increasePointer = false;
+            }
+        }
+        else
+        {
+            pointerImage.fillAmount -= pointerSpeed * Time.deltaTime;
+            if (pointerImage.fillAmount <= 0f)
+            {
+                pointerImage.fillAmount = 0f;
+                increasePointer = true;
+            }
+        }
+        if (pointerImage.fillAmount >= 1f)
+        {
+            pointerImage.fillAmount = 1f; 
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            player.canMove = true;
+            if (IsCorrectSegment(pointerImage.fillAmount))
+            {
+                BookManager.instance.TurnObjectOn(humanIndex);
+                Debug.Log("QTE Success!");
+                EndQTE();
+            }
+            else
+            {
+                Debug.Log("QTE Fail! Player -1");
+                player.TakeDamage(1);
+                EndQTE();
+            }
+        }
+    }
+    
+    bool IsCorrectSegment(float pointerValue)
+    {
+        float min = targetSegment.fillAmount - 0.1f;
+        float max = targetSegment.fillAmount + 0.1f;
+        return pointerValue >= min && pointerValue <= max;
+    }
+
+    void EndQTE()
+    {
+        isQTEActive = false;
+        qteUI.SetActive(false);
+    }
+
     IEnumerator ToggleIsGoodCoroutine()
     {
         while (true)
         {
-            // 等待指定时间
             yield return new WaitForSeconds(toggleInterval);
-
-            // 切换布尔值
             isGood = !isGood;
-
-            // 输出当前状态到控制台供调试
-
         }
     }
-
 }

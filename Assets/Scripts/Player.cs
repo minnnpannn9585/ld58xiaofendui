@@ -4,31 +4,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI; 
 
-
-
 public class Player : MonoBehaviour
 {
     public float minX = -5f;
     public float maxX = 5f;
     public float minY = 0f;
     public float maxY = 5f;
-    bool canMove = true;
+    
+    [HideInInspector]
+    public bool canMove = true;
 
     float distance = 0;
 
-
-    Transform targetObject;         // ���Ķ���
-    public float detectionRange = 5f;      // ����QTE�ķ�Χ
-    public GameObject qteUI;               // QTE��UI����
-    public Image pointerImage;             // QTEָ��
-    public Image targetSegment;            // ��ȷ������
-
-    private bool isQTEActive = false;
-    public float pointerSpeed = 0.5f;      // ָ���ƶ��ٶ�
-    public bool increasePointer = true;    // ָ������״̬
+    Transform targetObject;
+    public float detectionRange = 5f;      // ����QTE
+    
     public GameObject deathPanel;
-
-
+    
     [HideInInspector]
     public PlayerHealth playerHealth;
 
@@ -42,8 +34,7 @@ public class Player : MonoBehaviour
 
     bool inRange;
     NPCController npc;
-
-
+    
     void Start()
     {
         playerHealth = GetComponent<PlayerHealth>();
@@ -55,22 +46,17 @@ public class Player : MonoBehaviour
     {
         if (!canMove) return;   
         
-        // ����Ŀ���ٶ�
         float targetSpeed = moveInput * moveSpeed;
-
-        // �����Ƿ�������ѡ����ٻ����
+        
         if (moveInput != 0)
         {
-            // ƽ������
             currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, moveSpeed / accelerationTime * Time.fixedDeltaTime);
         }
         else
         {
-            // ƽ������
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0, moveSpeed / decelerationTime * Time.fixedDeltaTime);
         }
-
-        // ���� Rigidbody2D ���ٶ�
+        
         rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
     }
     void Update()
@@ -81,10 +67,7 @@ public class Player : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
         transform.position = pos;
-        if (isQTEActive == true)
-        {
-            HandleQTEInput();
-        }
+        
         if (!canMove) return;   
         
         if(targetObject != null) 
@@ -104,102 +87,23 @@ public class Player : MonoBehaviour
             if (npc.isGood)
             {
                Heal(1);
+               BookManager.instance.TurnObjectOn(npc.humanIndex);
             }
             else
             {
-                if (distance <= detectionRange && !isQTEActive)
+                if (distance <= detectionRange && !npc.isQTEActive)
                 {
-                    StartQTE();
+                    npc.StartQTE();
                 }
             }
-            
-
-        }
-
-        
-    }
-
-    void StartQTE()
-    {
-        print(1111);
-        isQTEActive = true;
-        qteUI.SetActive(true);
-        pointerImage.fillAmount = 0f;
-        canMove = false;
-    }
-
-    void HandleQTEInput()
-    {
-        // ��QTE�߼������ո�ָֹͣ��
-        //pointerImage.fillAmount += Time.deltaTime; // ָ���Զ�����
-        if (increasePointer)
-        {
-            pointerImage.fillAmount += pointerSpeed * Time.deltaTime;
-            if (pointerImage.fillAmount >= 1f)
-            {
-                pointerImage.fillAmount = 1f;
-                increasePointer = false;
-            }
-        }
-        else
-        {
-            pointerImage.fillAmount -= pointerSpeed * Time.deltaTime;
-            if (pointerImage.fillAmount <= 0f)
-            {
-                pointerImage.fillAmount = 0f;
-                increasePointer = true;
-            }
-        }
-        if (pointerImage.fillAmount >= 1f)
-        {
-            pointerImage.fillAmount = 1f; // ���ֵ
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            canMove = true;
-            if (IsCorrectSegment(pointerImage.fillAmount))
-            {
-                // �ɹ��߼�
-                Debug.Log("QTE Success!");
-                //Destroy(targetObject.gameObject); // �������
-                EndQTE();
-                
-            }
-            else
-            {
-                // ʧ���߼�
-                Debug.Log("QTE Fail! Player -1");
-                // �۳����1���������������Ҫʵ��Player����
-                Player playerHealth = GetComponent<Player>();
-                if (playerHealth != null)
-                {
-                    playerHealth.TakeDamage(1);
-                }
-                EndQTE();
-            }
         }
     }
-
-    bool IsCorrectSegment(float pointerValue)
-    {
-        // �ж�ָ���Ƿ�����ȷ��Χ
-        float min = targetSegment.fillAmount - 0.1f;
-        float max = targetSegment.fillAmount + 0.1f;
-        return pointerValue >= min && pointerValue <= max;
-    }
-
-    void EndQTE()
-    {
-        isQTEActive = false;
-        qteUI.SetActive(false);
-    }
-    
 
     public void TakeDamage(int damage)
     {
+        
         playerHealth.currentHealth -= damage;
-        if (playerHealth.currentHealth < 0) playerHealth.currentHealth = 0;
+        print(playerHealth.currentHealth);
         playerHealth.UpdateHearts();
         if (playerHealth.currentHealth <= 0)
         {
@@ -207,17 +111,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    // �ظ�Ѫ������
     public void Heal(int amount)
     {
         playerHealth.currentHealth += amount;
         if (playerHealth.currentHealth > playerHealth.maxHealth) playerHealth.currentHealth = playerHealth.maxHealth;
         playerHealth.UpdateHearts();
     }
-
-
-    
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("NPC"))
@@ -255,6 +154,5 @@ public class Player : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
-
 }
 
