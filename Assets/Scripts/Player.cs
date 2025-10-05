@@ -8,28 +8,20 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     
-    public Transform targetObject;         // ¼ì²âµÄ¶ÔÏó
-    public float detectionRange = 5f;      // ´¥·¢QTEµÄ·¶Î§
-    public GameObject qteUI;               // QTEµÄUI½çÃæ
-    public Image pointerImage;             // QTEÖ¸Õë
-    public Image targetSegment;            // ÕýÈ·µÄÇø¶Î
+    public Transform targetObject;         // ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½
+    public float detectionRange = 5f;      // ï¿½ï¿½ï¿½ï¿½QTEï¿½Ä·ï¿½Î§
+    public GameObject qteUI;               // QTEï¿½ï¿½UIï¿½ï¿½ï¿½ï¿½
+    public Image pointerImage;             // QTEÖ¸ï¿½ï¿½
+    public Image targetSegment;            // ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     private bool isQTEActive = false;
-    public float pointerSpeed = 0.5f;      // Ö¸ÕëÒÆ¶¯ËÙ¶È
-    public bool increasePointer = true;    // Ö¸ÕëÔö¼õ×´Ì¬
-    public GameObject heartPrefab;       // Ô¤ÖÆÐÄÐÎ
-    public Sprite heartFull;             // ÂúÑªÐÄ
-    public Sprite heartEmpty;            // ¿ÕÑªÐÄ
-    public Transform heartContainer;     // ÐÄÐÎ¸¸¶ÔÏó
-    private Image[] hearts;
-
-
-
-    public int maxHealth = 5;
+    public float pointerSpeed = 0.5f;      // Ö¸ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½Ù¶ï¿½
+    public bool increasePointer = true;    // Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
     
-    public int currentHealth ;
+    
 
-    public Slider healthBar;
+    [HideInInspector]
+    public PlayerHealth playerHealth;
 
     public float moveSpeed = 5f;
     public float accelerationTime = 0.5f;
@@ -45,44 +37,27 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        playerHealth = GetComponent<PlayerHealth>();
         rb = GetComponent<Rigidbody2D>();
-        currentHealth = maxHealth;
-        hearts = new Image[maxHealth];
-
-        // ´´½¨ÐÄÐÎUI
-        for (int i = 0; i < maxHealth; i++)
-        {
-            GameObject heart = Instantiate(heartPrefab, heartContainer);
-            Image heartImage = heart.GetComponent<Image>();
-            heartImage.sprite = heartFull;
-            hearts[i] = heartImage;
-        }
-
-
-        if (healthBar != null)
-        {
-            healthBar.maxValue = maxHealth;
-            healthBar.value = currentHealth;
-        }
     }
     void FixedUpdate()
     {
-        // ¼ÆËãÄ¿±êËÙ¶È
+        // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ù¶ï¿½
         float targetSpeed = moveInput * moveSpeed;
 
-        // ¸ù¾ÝÊÇ·ñÓÐÊäÈëÑ¡Ôñ¼ÓËÙ»ò¼õËÙ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Ù»ï¿½ï¿½ï¿½ï¿½
         if (moveInput != 0)
         {
-            // Æ½»¬¼ÓËÙ
+            // Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, moveSpeed / accelerationTime * Time.fixedDeltaTime);
         }
         else
         {
-            // Æ½»¬¼õËÙ
+            // Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0, moveSpeed / decelerationTime * Time.fixedDeltaTime);
         }
 
-        // ÉèÖÃ Rigidbody2D µÄËÙ¶È
+        // ï¿½ï¿½ï¿½ï¿½ Rigidbody2D ï¿½ï¿½ï¿½Ù¶ï¿½
         rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
     }
     void Update()
@@ -103,7 +78,6 @@ public class Player : MonoBehaviour
             if (npc.isGood)
             {
                Heal(1);
-
             }
             else
             {
@@ -111,16 +85,7 @@ public class Player : MonoBehaviour
                 {
                     StartQTE();
                 }
-
-                
             }
-            //else
-            //{
-            //    TakeDamage(10);
-            //}
-
-
-
         }
 
         if (isQTEActive == true)
@@ -138,8 +103,8 @@ public class Player : MonoBehaviour
 
     void HandleQTEInput()
     {
-        // ¼òµ¥QTEÂß¼­£º°´¿Õ¸ñÍ£Ö¹Ö¸Õë
-        //pointerImage.fillAmount += Time.deltaTime; // Ö¸Õë×Ô¶¯Ôö³¤
+        // ï¿½ï¿½QTEï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¸ï¿½Í£Ö¹Ö¸ï¿½ï¿½
+        //pointerImage.fillAmount += Time.deltaTime; // Ö¸ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
         if (increasePointer)
         {
             pointerImage.fillAmount += pointerSpeed * Time.deltaTime;
@@ -158,26 +123,25 @@ public class Player : MonoBehaviour
                 increasePointer = true;
             }
         }
-
-            if (pointerImage.fillAmount >= 1f)
+        if (pointerImage.fillAmount >= 1f)
         {
-            pointerImage.fillAmount = 1f; // ×î´óÖµ
+            pointerImage.fillAmount = 1f; // ï¿½ï¿½ï¿½Öµ
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (IsCorrectSegment(pointerImage.fillAmount))
             {
-                // ³É¹¦Âß¼­
+                // ï¿½É¹ï¿½ï¿½ß¼ï¿½
                 Debug.Log("QTE Success!");
-                //Destroy(targetObject.gameObject); // ÎïÌåËð»Ù
+                //Destroy(targetObject.gameObject); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 EndQTE();
             }
             else
             {
-                // Ê§°ÜÂß¼­
+                // Ê§ï¿½ï¿½ï¿½ß¼ï¿½
                 Debug.Log("QTE Fail! Player -1");
-                // ¿Û³ýÍæ¼Ò1µãÉúÃü»ò·ÖÊý£¬ÐèÒªÊµÏÖPlayerÊôÐÔ
+                // ï¿½Û³ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÊµï¿½ï¿½Playerï¿½ï¿½ï¿½ï¿½
                 Player playerHealth = GetComponent<Player>();
                 if (playerHealth != null)
                 {
@@ -190,7 +154,7 @@ public class Player : MonoBehaviour
 
     bool IsCorrectSegment(float pointerValue)
     {
-        // ÅÐ¶ÏÖ¸ÕëÊÇ·ñÔÚÕýÈ··¶Î§
+        // ï¿½Ð¶ï¿½Ö¸ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½Î§
         float min = targetSegment.fillAmount - 0.1f;
         float max = targetSegment.fillAmount + 0.1f;
         return pointerValue >= min && pointerValue <= max;
@@ -201,38 +165,27 @@ public class Player : MonoBehaviour
         isQTEActive = false;
         qteUI.SetActive(false);
     }
-
-
-    public void UpdateHearts()
-    {
-        for (int i = 0; i < hearts.Length; i++)
-        {
-            if (i < currentHealth)
-                hearts[i].sprite = heartFull;
-            else
-                hearts[i].sprite = heartEmpty;
-        }
-    }
+    
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        if (currentHealth < 0) currentHealth = 0;
-        UpdateHearts();
+        playerHealth.currentHealth -= damage;
+        if (playerHealth.currentHealth < 0) playerHealth.currentHealth = 0;
+        playerHealth.UpdateHearts();
     }
 
-    // »Ø¸´ÑªÁ¿·½·¨
+    // ï¿½Ø¸ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void Heal(int amount)
     {
-        currentHealth += amount;
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
-        UpdateHearts();
+        playerHealth.currentHealth += amount;
+        if (playerHealth.currentHealth > playerHealth.maxHealth) playerHealth.currentHealth = playerHealth.maxHealth;
+        playerHealth.UpdateHearts();
     }
 
 
     void Die()
     {
-        Debug.Log(gameObject.name + " ËÀÍö");
+        Debug.Log(gameObject.name + " ï¿½ï¿½ï¿½ï¿½");
         
         Destroy(gameObject);
     }
