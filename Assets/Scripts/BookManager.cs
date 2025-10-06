@@ -6,15 +6,18 @@ using UnityEngine;
 public class BookManager : MonoBehaviour
 {
     public static BookManager instance;
+    public GameObject audioManagerPrefab;
     public GameObject[] icons;
     public int score = 0;
     public GameObject winUI;
-
-    private void Awake()
+    public AudioManager audioManager;
+    public void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            //DontDestroyOnLoad(audioManager);
+            audioManager = Instantiate(audioManagerPrefab).GetComponent<AudioManager>();
         }
         else
         {
@@ -29,6 +32,7 @@ public class BookManager : MonoBehaviour
             icons[index].SetActive(true);
             score++;
             CheckWin();
+            
         }
     }
 

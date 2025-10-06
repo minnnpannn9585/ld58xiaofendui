@@ -81,31 +81,46 @@ public class Player : MonoBehaviour
 
         
         transform.Translate(move * moveSpeed * Time.deltaTime, Space.World);
-
+        
         if (inRange && Input.GetKeyDown(KeyCode.E))
         {
             if (npc.isGood)
             {
                Heal(1);
-               if (npc.isRight)
+                
+                if (npc.isRight)
                {
                    npc.isRightFinishTime++;
                    if(npc.isRightFinishTime == 2)
-                       BookManager.instance.TurnObjectOn(npc.humanIndex);
+                    {
+                        if (npc.isFirstTime)
+                        {
+                            BookManager.instance.TurnObjectOn(npc.humanIndex);
+                            npc.isFirstTime = false;
+                        }
+                   }    
                }
                else
                {
-                   BookManager.instance.TurnObjectOn(npc.humanIndex);
-               }
+                    if (npc.isFirstTime)
+                    {
+                        BookManager.instance.TurnObjectOn(npc.humanIndex);
+                        npc.isFirstTime = false;
+                    }
+                }
             }
             else
             {
                 if (distance <= detectionRange && !npc.isQTEActive)
                 {
+                    BookManager.instance.audioManager.Play(4, "humanAngry", false);
+                   
                     npc.StartQTE();
+                    
                 }
             }
         }
+        Loud();
     }
 
     public void TakeDamage(int damage)
@@ -122,6 +137,12 @@ public class Player : MonoBehaviour
 
     public void Heal(int amount)
     {
+        if(npc.isGood && npc.isRight)
+        {
+            npc.anim.SetBool("isGood", true);
+        }
+        BookManager.instance.audioManager.Play(1, "birdSmile", false);
+        BookManager.instance.audioManager.Play(2, "humanKind", false);
         playerHealth.currentHealth += amount;
         if (playerHealth.currentHealth > playerHealth.maxHealth) playerHealth.currentHealth = playerHealth.maxHealth;
         playerHealth.UpdateHearts();
@@ -162,6 +183,14 @@ public class Player : MonoBehaviour
         // 重新加载当前场景
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
+    }
+
+    public void Loud()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            BookManager.instance.audioManager.Play(5, "Loud", false);
+        }
     }
 }
 

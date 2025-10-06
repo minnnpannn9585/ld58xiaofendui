@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject audioManagerPrefab;
     public Animator cutSceneAnimator;
     public static Animator cutSceneAnimatorStatic;
     private static GameManager instance;
+    public AudioManager audioManager;
     
     // Start is called before the first frame update
     void Awake()
@@ -16,6 +18,8 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(audioManager);
+            audioManager = Instantiate(audioManagerPrefab).GetComponent<AudioManager>();
         }
         else
         {
@@ -23,7 +27,13 @@ public class GameManager : MonoBehaviour
         }
         cutSceneAnimatorStatic = cutSceneAnimator;
     }
-
+    void Start()
+    {
+        if (!instance) {
+            instance = this;
+           
+        }
+    }
 
     public static void ChangeScene(string sceneName, Animator animator=null)
     {

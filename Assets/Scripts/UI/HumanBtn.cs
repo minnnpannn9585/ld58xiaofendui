@@ -27,9 +27,9 @@ public class HumanBtn : MonoBehaviour
     {
         humanCanvas.SetActive(true);
         // insert data into human ui
-        humanCanvas.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = humanCollection.humans[index].humanImage;
-        humanCanvas.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = humanCollection.humans[index].description;
-        humanCanvas.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().text = humanCollection.humans[index].name;
+        humanCanvas.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = humanCollection.humans[index].humanImage;
+        humanCanvas.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().text = humanCollection.humans[index].description;
+        humanCanvas.transform.GetChild(0).GetChild(3).GetComponent<TMP_Text>().text = humanCollection.humans[index].name;
     }
     
     private void OnDisable()
