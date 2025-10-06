@@ -11,6 +11,7 @@ public class NPCController : MonoBehaviour
     public bool isGood;
     public int humanIndex;
     public bool isRight;
+    public bool healFirstTime = true;
 
     [HideInInspector]
     public bool isFirstTime = true;
@@ -24,7 +25,8 @@ public class NPCController : MonoBehaviour
 
     [HideInInspector]
     public bool isQTEActive = false;
-    public float pointerSpeed = 0.5f;
+
+    public float pointerSpeed = 2f;
     public bool increasePointer = true;
 
     void Start()

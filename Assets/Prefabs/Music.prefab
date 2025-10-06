@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56fd53c57ea52043a44f4cf52a46731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  themeBGM: {fileID: 8300000, guid: b7da48c15e710a741842583fac3307c7, type: 3}
+  themeBGM: {fileID: 0}
   birdMove: {fileID: 8300000, guid: a83e070bef48246759fa672c9cdf0e2f, type: 3}
   birdSmile: {fileID: 8300000, guid: 77b7c1e733ebd4ab5837ce8c91de0e6e, type: 3}
   birdHurt: {fileID: 8300000, guid: e5621e610691b4d4b8bbf3a25bb623c5, type: 3}
@@ -76,7 +76,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fecae2a77cef6694caa4dd7624c09ef9, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

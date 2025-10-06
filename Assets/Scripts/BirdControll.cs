@@ -38,6 +38,6 @@ public class BirdControll : MonoBehaviour
     void FixedUpdate()
     {
         // ÒÆ¶¯½ÇÉ«
-        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        //rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
     }
 }

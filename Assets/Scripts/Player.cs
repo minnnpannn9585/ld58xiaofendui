@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    
     public float minX = -5f;
     public float maxX = 5f;
     public float minY = 0f;
@@ -42,25 +43,42 @@ public class Player : MonoBehaviour
         if (deathPanel!=null)
             deathPanel.SetActive(false);
     }
-    void FixedUpdate()
-    {
-        if (!canMove) return;   
+    //void FixedUpdate()
+    //{
+    //    if (npc != null)
+    //    {
+    //        if (npc.isQTEActive)
+    //        {
+    //            return;
+    //        }
+    //    }
+    //    if (!canMove) return;   
         
-        float targetSpeed = moveInput * moveSpeed;
+    //    float targetSpeed = moveInput * moveSpeed;
         
-        if (moveInput != 0)
-        {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, moveSpeed / accelerationTime * Time.fixedDeltaTime);
-        }
-        else
-        {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, 0, moveSpeed / decelerationTime * Time.fixedDeltaTime);
-        }
+    //    if (moveInput != 0)
+    //    {
+    //        currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, moveSpeed / accelerationTime * Time.fixedDeltaTime);
+    //    }
+    //    else
+    //    {
+    //        currentSpeed = Mathf.MoveTowards(currentSpeed, 0, moveSpeed / decelerationTime * Time.fixedDeltaTime);
+    //    }
         
-        rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
-    }
+    //    rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
+    //}
     void Update()
     {
+        if (!canMove) return;
+        if (npc != null)
+        {
+            if (npc.isQTEActive)
+            {
+                return;
+            }
+        }
+
+        print(11111);
         Vector3 pos = transform.position;
 
         // 限制物体在指定范围内
@@ -68,7 +86,7 @@ public class Player : MonoBehaviour
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
         transform.position = pos;
         
-        if (!canMove) return;   
+        
         
         if(targetObject != null) 
             distance = Vector3.Distance(transform.position, targetObject.position);
@@ -86,7 +104,12 @@ public class Player : MonoBehaviour
         {
             if (npc.isGood)
             {
-               Heal(1);
+                if(npc.healFirstTime)
+                {
+                    Heal(1);
+                    npc.healFirstTime = false;
+                }
+               
                 
                 if (npc.isRight)
                {
