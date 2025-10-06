@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1896c35f42e3142b0885108d5acfa68e, type: 3}
   m_Name: Human1 8
   m_EditorClassIdentifier: 
-  name: 888
-  humanImage: {fileID: 21300000, guid: 9d4dc84414de34040a90719bd0a1bb46, type: 3}
-  description: 11111 111111aaaaa aaaaaaa111 111188
+  name: Student
+  humanImage: {fileID: 21300000, guid: 6ff3f74fdc524415f9f1cc5a490dcf12, type: 3}
+  description: "Don\u2019t worry, your lunch can\u2019t possibly be worse than your
+    report card."

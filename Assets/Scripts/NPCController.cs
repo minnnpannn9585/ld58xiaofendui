@@ -156,9 +156,12 @@ public class NPCController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-
-            anim.SetBool("isGood", false);
-            anim.SetBool("isBad", false);
+            if (anim != null)
+            {
+                anim.SetBool("isGood", false);
+                anim.SetBool("isBad", false);
+            }
+            
 
         }
     }

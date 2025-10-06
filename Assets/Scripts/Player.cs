@@ -154,8 +154,9 @@ public class Player : MonoBehaviour
             inRange = true;
             npc = collision.GetComponent<NPCController>();
             targetObject = collision.transform;
-            print(npc.name);
-            print(npc.isGood);
+            //print(npc.name);
+            //print(npc.isGood);
+            npc.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 
@@ -163,10 +164,12 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag("NPC"))
         {
+            npc.transform.GetChild(0).gameObject.SetActive(false);
             targetObject = null;
             inRange = false;
             npc = null;
             //print(npc.name);
+            
         }
     }
     void Die()

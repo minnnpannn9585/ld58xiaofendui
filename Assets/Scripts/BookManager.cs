@@ -29,6 +29,7 @@ public class BookManager : MonoBehaviour
     {
         if (!icons[index].activeInHierarchy)
         {
+            print(index);
             icons[index].SetActive(true);
             score++;
             CheckWin();
@@ -38,7 +39,7 @@ public class BookManager : MonoBehaviour
 
     public void CheckWin()
     {
-        if (score == icons.Length - 3)
+        if (score == icons.Length)
             winUI.SetActive(true);
     }
 }

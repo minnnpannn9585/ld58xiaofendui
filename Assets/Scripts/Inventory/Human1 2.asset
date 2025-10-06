@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1896c35f42e3142b0885108d5acfa68e, type: 3}
   m_Name: Human1 2
   m_EditorClassIdentifier: 
-  name: 222
-  humanImage: {fileID: 21300000, guid: b72b7f46d285c4460bd8939bd2b68f1f, type: 3}
-  description: 11111 111111aaaaa aaaaaaa111 11112
+  name: Surfer
+  humanImage: {fileID: 21300000, guid: 176c58346fec240d6a9fee5a9a9815cf, type: 3}
+  description: "20th attempt at wave-riding\u2026 still a total wipeout."

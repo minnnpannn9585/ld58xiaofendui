@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1896c35f42e3142b0885108d5acfa68e, type: 3}
   m_Name: Human1 7
   m_EditorClassIdentifier: 
-  name: 777
-  humanImage: {fileID: 21300000, guid: b4abc300a7af8410f9aea53cbc90c1b6, type: 3}
-  description: 11111 111111aaaaa aaaaaaa111 11117
+  name: Dog Walker
+  humanImage: {fileID: 21300000, guid: 6ff3f74fdc524415f9f1cc5a490dcf12, type: 3}
+  description: "Whoa there\u2014watch the teeth!"

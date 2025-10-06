@@ -19,7 +19,7 @@ public class HumanBtn : MonoBehaviour
 
     void Awake()
     {
-        index = transform.GetSiblingIndex();
+        index = transform.GetSiblingIndex() -1;
         button = GetComponent<Button>();
     }
 
